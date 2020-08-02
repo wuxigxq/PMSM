@@ -1,0 +1,178 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[UTF8]{ctex}
+\usepackage{color}
+\usepackage{amsmath}
+\usepackage{geometry}
+\usepackage{booktabs}
+
+%opening
+\geometry{a4paper,left=3.17cm,right=3.17cm,top=2.54cm,bottom=2.54cm}
+\title{永磁同步电机振动噪音分析}
+\author{郭小强}
+\date{2020.07.23}
+
+
+
+\begin{document}
+\maketitle
+\section{磁场分析}
+永磁同步电机中，由定、转子磁场相互作用产生的径向电磁力是振动噪音的主要来源。故首先对定、转子磁场相互作用后的气隙磁密进行分析，进而基于气隙磁密计算径向电磁力。
+\subsection{定子基波电流激励下的磁场分析}
+永磁同步电机的气隙磁密可近似表示为：
+\begin{equation} \label{eq:air gap flux density}
+b(\theta, t)=f(\theta, t) \lambda(\theta, t)
+\end{equation}
+式中：$f(\theta, t)$为气隙磁动势，$\lambda(\theta, t)$为气隙比磁导。
+
+\subsubsection{磁动势}
+\par
+(1)定子基波磁动势
+\begin{equation} \label{eq:fundaMMF}
+\textcolor{red}{
+f_{0}(\theta, t)=F_{0} \cos \left(p \theta-\omega_{0} t-\varphi_{0}\right)}
+\end{equation}
+\par
+(2)定子谐波磁动势
+\begin{equation}
+\textcolor{red}{
+\sum f_{v}(\theta, t)=\sum_{v} F_{v} \cos \left(v \theta-\omega_{0} t-\varphi_{1}\right)}
+\end{equation}
+\par
+(3)转子永磁体磁动势
+\begin{equation}
+\textcolor{red}{\sum f_{\mu}(\theta, t)=\sum_{\mu} F_{\mu} \cos \left(\mu \theta-\mu \omega_{0} t / p-\varphi_{2}\right)}
+\end{equation}
+\par
+所以当正弦波供电时，即电流中仅存在基波，无谐波电流时，永磁同步电机磁动势为：
+\par
+\begin{equation}
+\begin{aligned}
+f(\theta, t)=& f_{0}(\theta, t)+\sum_{v} f_{v}(\theta, t)+\sum_{\mu} f_{\mu}(\theta, t) \\
+=& F_{0} \cos \left(p \theta-\omega_{0} t-\varphi_{0}\right) +\sum_{v} F_{v} \cos \left(v \theta-\omega_{0} t-\varphi_{1}\right)  
++\sum_{\mu} F_{\mu} \cos \left(\mu \theta-\mu \omega_{0} t / p-\varphi_{2}\right)
+\end{aligned}
+\end{equation}
+
+\subsubsection{气隙磁导}
+当考虑齿槽效应时，气隙比磁导可近似表示为：
+\begin{equation} \label{permeance}
+\lambda(\theta, t)=\Lambda_{0}+\textcolor{red}{\sum \lambda_{l1}}
+\end{equation}
+式中，$ \Lambda_{0} $为单位面积气隙磁导的不变部分。
+\begin{equation}\Lambda_{0}=\frac{\mu_{0}}{k_{\delta} \delta}\end{equation}
+$ \lambda_{l1} $为定子开槽引起的谐波比磁导的周期分量。
+\begin{equation}\lambda_{11}=\Lambda_{11} \cos \left(l_{1} Z_{1} \theta\right)\end{equation}
+\begin{equation}
+\Lambda_{11}=\frac{\mu_{0}\left(k_{\delta}-1\right)}{k_{\delta} \delta}
+\left| \frac{\sin \left(l_{1} \frac{k_{\delta}-1}{k_{\delta}} \pi\right)}{l_{1} \frac{k_{s}-1}{k_{\delta}} \pi } \right| 
+\end{equation}
+式中$ k_{\delta} $为气隙因数，$ \delta $为气隙长度，$ Z_{1} $为定子槽数，$ l_{1}=1,2,3\cdots $。
+\par
+
+\subsubsection{气隙磁密}
+将式$ \left( \ref{eq:fundaMMF}\right) \sim \left( \ref{permeance}\right) $ 带入式$ \left( \ref{eq:air gap flux density}\right) $ ，可得仅在基波电流作用下的气隙磁场表达式为：
+\begin{equation}\label{complete flux density}
+\begin{aligned}
+b(\theta, t)=& f(\theta, t) \lambda(\theta, t)=\left[f_{0}(\theta, t)+\sum f_{v}(\theta, t)+\sum f_{\mu}(\theta, t)\right] \cdot\left[\Lambda_{0}+\sum \lambda_{1}\right] \\
+%approxiate
+\approx & F_{0} \Lambda_{0} \cos \left(p \theta-\omega_{0} t-\varphi_{0}\right)
++\sum F_{v} \Lambda_{0} \cos \left(v \theta-\omega_{0} t-\varphi_{1}\right)\\
+&+\sum F_{\mu} \Lambda_{0} \cos \left(\mu \theta-\mu \omega_{0} t / p-\varphi_{2}\right) \\
+&\left.+\sum \frac{F_{0} \Lambda_{11}}{2} \cos \left(\pm l_{1} Z_{1}+p\right) \theta-\omega_{0} t-\varphi_{3}\right]\\
+&+\sum \sum \frac{F_{\mu} \Lambda_{11}}{2} \cos \left[\left(\pm l_{1} Z_{1}+\mu\right) \theta-\mu \omega t / p-\varphi_{4}\right] \\
+%final result
+=& B_{0} \cos \left(p \theta-\omega_{0} t-\varphi_{0}\right)+\sum B_{v} \cos \left(\nu \theta-\omega_{0} t-\varphi_{1}\right)\\
+&+\sum B_{\mu} \cos \left(\mu \theta-\mu \omega t / p-\varphi_{2}\right) \\
+&+\sum B_{0 \lambda_{1}} \cos \left[\left( \pm l_{1} Z_{1}+p\right) \theta-\omega_{0} t-\varphi_{3}\right]\\
+& +\sum \sum B_{\mu \lambda_{1}} \cos \left[ \left(\pm l_{1} Z_{1}+\mu\right) \theta-\mu \omega_{0} t / p-\varphi_{4}\right]
+\end{aligned}
+\end{equation}
+\par
+式中，\par
+$ B_{0} $ 为定子基波磁动势作用于气隙磁导不变部分的磁密；\par
+$ B_{v} $ 为定子谐波磁动势作用于气隙磁导不变部分的磁密；\par
+$ B_{\mu} $ 为转子永磁体磁动势作用于气隙磁导不变部分的磁密；\par
+$ B_{0\Lambda_{1}} $ 为定子基波磁动势作用于谐波比磁导的磁密；\par
+$ B_{\mu\Lambda_{1}} $ 为转子永磁体磁动势作用于谐波比磁导的磁密；\par
+
+公式$ \left( \ref{complete flux density} \right) $ 仅为近似表达式，仅考虑了气隙磁导不变部分与定子基波磁动势、定子谐波磁动势、转子永磁体磁动势的作用效果，以及谐波比磁导与定子基波磁动势、转子永磁体磁动势的作用效果。
+
+\subsection{定子基波电流激励下的定子谐波磁场分析}
+\subsubsection{整数槽永磁电机气隙磁场的谐波极对数}
+\begin{equation}v=\left(2 m k_{1}+1\right) p\end{equation}
+\subsubsection{分数槽永磁电机气隙磁场的谐波极对数}
+每极每相槽数为：
+\begin{equation}q=\frac{Z_{1}}{2 m p}=b+\frac{c}{d}=\frac{b d+c}{d}\end{equation} \par
+
+单元电机数为：
+\begin{equation}
+t=
+\left\lbrace 
+\begin{array}{cc}
+2p/d, & d\mbox{为偶数} \\
+p/d, & d\mbox{为奇数}
+\end{array}
+\right.
+\end{equation}\par
+
+$ \left. 1\right)  $ 三相分数槽 \par
+谐波磁场阶数为：
+\begin{equation}
+v=
+\left\lbrace 
+\begin{array}{cc}
+\left( 3k_{1}+1 \right) t, & d\mbox{为偶数} \\
+\left( 6k_{1}+1 \right) t, & d\mbox{为奇数}
+\end{array}
+\right.
+\end{equation}
+式中$ k_{1}=0, \pm1, \pm2, \pm3\cdots $。
+
+$ \left. 2\right)  $ 六相(双Y移$30^\circ$)分数槽 \par
+谐波磁场阶数为：
+\begin{equation} \label{eq:六相谐波阶数}
+v=
+\left\lbrace 
+\begin{array}{cc}
+\left( 3k_{1}+1 \right) t, & d\mbox{为偶数} \\
+\left( 6k_{1}+1 \right) t, & d\mbox{为奇数}
+\end{array}
+\right.
+\end{equation}
+式中$ k_{1}=0, \pm1, \pm2, \pm3\cdots $，且$ v\neq\left( 12k_{1}-5\right) p_{1}t $，$ p_{1} $为单元电机极对数。
+
+\subsubsection{案例分析}
+以一台24槽22极六相双Y移$30^\circ$的分数槽绕组为例，其每极每相槽数$ q=\frac{2}{11} $，其分母为奇数。利用公式$ \left( \ref{eq:六相谐波阶数} \right) $，可计算出定子谐波次数，如表$ \ref{tab:六相24槽22极} $所示。
+\begin{table}[h]
+	\centering
+	\caption{六相24槽22极永磁电机谐波次数和绕组因数}
+	\label{tab:六相24槽22极}
+	\begin{tabular}{cccccc}
+		\hline
+		谐波次数 & 1 & -5 & 7 & -11 & 13 \\
+		\hline
+		谐波绕组因数 & 0.2161 & 0.1576 & 0.2053 & 0.9577 & 0.9577 \\
+		\hline
+	\end{tabular}
+\end{table} \par
+定子谐波磁动势的幅值可以表示为：
+\begin{equation}F_{v}=\frac{m \sqrt{2}}{\pi v} I_{N 1} N K_{d p v}\end{equation} \par
+定子磁场谐波幅值可以表示为：
+\begin{equation}B_{v}=F_{v} \frac{\mu_{0}}{K_{\delta} K_{s} \delta}\end{equation} \par
+下面分析永磁体产生的谐波磁场，永磁体产生的气隙磁密表达式为：
+\begin{equation} \label{eq:PMflux} b_{m}(\theta, t)=\sum f_{\mu}(\theta, t) \lambda(\theta)\end{equation}\par
+由式$ \left( \ref{eq:PMflux}\right)  $可看出，永磁体产生的气隙磁密为转子磁动势与气隙比磁导的乘积。
+永磁体谐波磁动势为：
+\begin{equation} \label{eq:PM_MMF} f_{\mu}(\theta, t)=\frac{B_{\mu} \delta k_{s} k_{\delta}}{\mu_{0}} \cos \left(\mu \omega_{0} t / p-\mu \theta\right)\end{equation}
+其中，$ \mu $为永磁体的谐波极对数，$ B_{\mu} $为永磁体谐波气隙磁密的幅值，其表达式分别为：
+\begin{equation}\mu=\left(2 k_{2}+1\right) p\end{equation}
+\begin{equation}B_{\mu}=k_{\mu \delta} k_{\mu} k_{c} B_{\delta}\end{equation}
+式中，$ B_{\delta} $为气隙磁密的幅值，$ k_{\mu\delta} $为开槽因数，$ k_{\mu} $为空间谐波因数，$ k_{c} $为斜极因数，其表达式分别为：
+\begin{equation}k_{\mu \delta}=1-\sum \frac{\Lambda_{l 1}}{\Lambda_{0}} \frac{\mu^{2}}{\mu^{2}-\left(\frac{l_{1} Z_{1}}{p}\right)^{2}}\end{equation}
+\begin{equation}k_{\mu}=\frac{4}{\mu \pi} \sin \frac{\mu \alpha_{i} \pi}{2}\end{equation}
+\begin{equation} \label{eq:skewFac} k_{c}=\frac{\sin \left(\mu \frac{\alpha_{s k e v}}{2}\right)}{\mu \frac{\alpha_{s k e v}}{2}}\end{equation}
+式中，$ \alpha_{i} $为极弧因数，$ \alpha_{skew} $为斜极角度。\par
+将式$ \left( \ref{eq:PM_MMF}\right) \sim \left( \ref{eq:skewFac}\right)  $代入式$ \ref{eq:PMflux} $，可得永磁体产生的气隙磁密表达式为：
+\begin{equation}b_{m}(\theta, t)=\sum_{\mu} B_{\mu} \Lambda_{0} \cos \left(\mu \omega_{0} t / p-\mu \theta\right)+\sum_{\mu} \sum_{l_{1}}(-1)^{j_{1}+1} \frac{B_{\mu} \Lambda_{l 1}}{2} \cos \left[\mu \omega_{0} t / p-\left(\mu \pm l_{1} Z_{1}\right) \theta\right]\end{equation}
+
+\end{document}
